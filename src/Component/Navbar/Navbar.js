@@ -10,41 +10,54 @@ const Navbar = () => {
 
 
   
-  const [User, setUser] = useState();
+ 
   const navigate = useNavigate();
-  
+  const [user, setUser] = useState();
+  const [intext,setIntext]= useState('Login with unstoppabledomains ');
   const [isLoggedIn, setisLoggedIn] = useState(false);
+  
        const uauthOptions = new UAuth ({
         clientID: "1137ff52-041d-42d6-87f5-57dfd8e3eef9",
         redirectUri: "http://localhost:3000/",
         scope: "openid wallet "
       }) ;
- 
- 
-  const handleLogin = async () => {
-  
-    if(!isLoggedIn){
- await uauthOptions.logout()
-  setisLoggedIn(isLoggedIn => !isLoggedIn)
-  console.log(isLoggedIn)
-  navigate(`/`)
-  
-}
-else
-{
- try {
-    const authorization = await uauthOptions.loginWithPopup()
-    setUser(authorization.idToken.sub)
-   
-    setisLoggedIn(isLoggedIn => !isLoggedIn)
-   
-    navigate(`/dashboard/${authorization.idToken.wallet_address}`)
-  } catch (error) {
-    alert(error)
-  }
-}
 
-  }
+      useEffect(() => {
+       if(isLoggedIn){
+        
+        setIntext('Logout')
+       }
+       else{
+        setIntext('Login with unstoppabledomains' )
+       }
+      }, [isLoggedIn])
+      const handleLogin = async () => {
+  
+        if(isLoggedIn){
+     await uauthOptions.logout()
+     setisLoggedIn(isLoggedIn => !isLoggedIn)
+     setUser('')
+      navigate(`/`)
+      
+      
+    }
+    else
+    {
+     try {
+        const authorization = await uauthOptions.loginWithPopup()
+        
+        setUser(authorization.idToken.sub)
+       
+        
+    
+        navigate(`/dashboard/${authorization.idToken.wallet_address}`)
+        setisLoggedIn(isLoggedIn => !isLoggedIn)
+      } catch (error) {
+        alert(error)
+      }
+    }
+    
+      }
 
  
   return (
@@ -55,11 +68,9 @@ else
         <h1 className='w-20 font-bold cursor-pointer text-4xl py-2'>Dashboard</h1>
         </div>
         <div className='flex   w-full  place-content-center'>
-          { isLoggedIn 
-        ?  (<div><span>{User}</span><button onClick = {handleLogin} className='hover:border-black w-auto h-14 p-4 border mt-2 mr-6 rounded font-medium  hover:bg-black flex  hover:text-white'>  Logout </button></div>) 
-        :  (<div > <button onClick = {handleLogin} className='hover:border-black w-auto p-4 h-14 border mt-2 mr-6 rounded font-medium  hover:bg-black flex  hover:text-white'> Login with unstoppabledomains </button></div>) 
-       
-}
+         
+        <div > <button onClick = {handleLogin} className='hover:border-black w-auto p-4 h-14 border mt-2 mr-6 rounded font-medium  hover:bg-black flex  hover:text-white'> {intext} </button></div>
+
       
   </div>
   </div>
