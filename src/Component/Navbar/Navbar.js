@@ -24,8 +24,15 @@ const Navbar = () => {
   const handleLogin = async () => {
   
     if(!isLoggedIn){
-
-  try {
+ await uauthOptions.logout()
+  setisLoggedIn(isLoggedIn => !isLoggedIn)
+  console.log(isLoggedIn)
+  navigate(`/`)
+  
+}
+else
+{
+ try {
     const authorization = await uauthOptions.loginWithPopup()
     setUser(authorization.idToken.sub)
    
@@ -35,13 +42,6 @@ const Navbar = () => {
   } catch (error) {
     alert(error)
   }
-}
-else
-{
-  await uauthOptions.logout()
-  setisLoggedIn(isLoggedIn => !isLoggedIn)
-  console.log(isLoggedIn)
-  navigate(`/`)
 }
 
   }
