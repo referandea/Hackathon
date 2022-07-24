@@ -1,14 +1,27 @@
 import React from 'react'
-import Header from '../Component/Header.js';
-import Navbar from '../Component/Navbar/Navbar';
+import Navbar from '../Component/Navbar'
+import Search from '../Component/Search'
 
-
-
+import { Link, useNavigate } from 'react-router-dom';
+import Footer from '../Component/Footer'
 const Home = () => {
+  const navigate = useNavigate();
   return (
-    <div><div><Navbar />
-    <Header />
-    </div></div>
+    <div > <Navbar />
+    <Search />
+    
+    <div className='mt-16'>
+  <Footer />
+  </div>
+ 
+    </div>
+   
+  
+   
+    
+    
+     
+    
   )
 }
 

@@ -1,23 +1,24 @@
-
+import logo from './logo.svg';
+import React from 'react'
 import './App.css';
-import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./Pages/Dashboard.js";
-import Home from "./Pages/Home.js";
+import Home from './Pages/Home';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from './Pages/Dashboard';
 
-
-const App = () => {
-  
-  
-  
-
+function App() {
+ 
   return (
+    
     <Router>
-    <Routes>
-    <Route exact  path="/"  element={<Home />} />
-      <Route path="/dashboard/:rer"  element={<Dashboard />} />
-      
-    </Routes>
+      <Routes>
+        <Route path='/'  element={<Home  />} />
+          <Route path='/dashboard/:rem' element={<Dashboard />}/>
+        
+      </Routes>
     </Router>
+    
   );
-};
+}
+
+
 export default App;
